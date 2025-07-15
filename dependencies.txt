@@ -1,0 +1,6 @@
+wget
+xz-utils
+arm-linux-gnueabihf-gcc
+gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
+crossbuild-essential-armhf
+build-essential libssl-dev libffi-dev zlib1g-dev libbz2-dev libsqlite3-dev
