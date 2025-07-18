@@ -5,6 +5,7 @@
 Python*/
 python-arm-install/
 *.tgz
+python_*/
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

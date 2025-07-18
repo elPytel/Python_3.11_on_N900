@@ -12,6 +12,13 @@
   - [Changing Python Version](#changing-python-version)
   - [OpenSSL](#openssl)
   - [Resources](#resources)
+- [Packaging Python 3.11 for N900](#packaging-python-311-for-n900)
+  - [Build guide](#build-guide)
+    - [Run the packaging script to create folder structure](#run-the-packaging-script-to-create-folder-structure)
+    - [Edit the control file](#edit-the-control-file)
+    - [Move the python binaries](#move-the-python-binaries)
+    - [Build the Debian package](#build-the-debian-package)
+    - [Copy the package to N900 over SSH](#copy-the-package-to-n900-over-ssh)
 
 ## Compilation Guide
 
@@ -89,3 +96,47 @@ For compiling Python 3.11 you need compatible versions of Python and its depende
 
 ## Resources
 - [Build python 3.11 on raspberry pi from source](https://cloasdata.de/?p=352)
+
+# Packaging Python 3.11 for N900
+
+Run helper script `package_python.sh` to create a Debian package for Python 3.11. 
+
+## Build guide
+### Run the packaging script to create folder structure
+Run the script `package_python.sh` to create the necessary directory structure for packaging Python 3.11:
+```bash
+./package_python.sh
+```
+
+### Edit the control file
+You have to manually edit the `DEBIAN/control` file to set the correct package name, version, architecture, maintainer, and description.
+
+`control` file example:
+```txt
+Package: python
+Version: 3.11.10
+Architecture: armhf
+Maintainer: elPytel <jaroslav.korner1@gmail.com>
+Section: interpreters
+Priority: optional
+Description: Python 3.11.10 for Nokia N900
+
+```
+
+### Move the python binaries
+After compiling Python, you need to move the binaries to the correct location in the package structure.
+Move the python binaries to the `python_3.11.10_armhf/usr/bin/` directory:
+
+### Build the Debian package
+Run the helper script `build_python_deb.sh` (again) to create the Debian package:
+```bash
+./build_python_deb.sh
+```
+
+This will create a `.deb` file in the current directory, which you can then install on your N900 device.
+
+### Copy the package to N900 over SSH
+You can use `scp` to copy the package to your N900 device:
+```bash
+scp python_3.11.10_armhf.deb user@<n900_ip>:/home/user/MyDocs/
+```
